@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Mail;
 class AuthController extends Controller
 {
     public function registerForm(){
+        if(Auth::check()){
+            abort(403);
+        }
         return view("auth.register");
     }
     public function handleRegister(RegisterRequest $request){
@@ -36,6 +39,12 @@ class AuthController extends Controller
 
     }
     public function loginForm(){
+        if(Auth::check()){
+
+            if(Auth::user()->email_verified_at == null){
+                abort(403);
+            }
+        }
         return view("auth.login");
     }
 
