@@ -30,6 +30,7 @@ class AuthController extends Controller
         $user->image()->create([
             'image_path'=> $uploadedAvatar,
         ]);
+        Auth::login($user);
         Mail::to($user->email)->send(new SendSmsToMail($user));
         return redirect()->route('loginForm');
 
